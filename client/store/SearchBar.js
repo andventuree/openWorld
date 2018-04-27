@@ -23,8 +23,6 @@ export const getAccountDetails = accountName =>
     .then(acctDetails => {
       if (!acctDetails) { return console.log('There is no account by such name.') }
       else {
-        // console.log(`${accountName} acctDetails: `, acctDetails);
-        // console.log('acctDetails.public_repos: ', acctDetails.data.public_repos);
         let numofRepos = acctDetails.data.public_repos
         let pageRequests = Math.ceil(numofRepos / 100);
         dispatch(searchFor(accountName, acctDetails))
