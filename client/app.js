@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Navbar, SearchBar} from './components'
+import {Navbar, SearchBar} from './components'
 import Routes from './routes'
 
 

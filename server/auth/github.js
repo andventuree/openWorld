@@ -17,7 +17,7 @@ if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET) {
   }
 
   const strategy = new GitHubStrategy(githubConfig, (accessToken, refreshToken, profile, done) => {
-    console.log('!!!check out this profile: ', profile);
+    console.log('!!! Logging in to GitHub as ', profile.username);
     const githubId = profile.id
     const name = profile.displayName
     const email = 'emailNotProvidedOnGitHubPublicEmailField@email.com'
