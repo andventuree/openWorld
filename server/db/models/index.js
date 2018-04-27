@@ -1,18 +1,17 @@
 const User = require('./user')
+const GithubAcct = require('./githubAcct')
+const Repo = require('./repo')
+const Language = require('./language')
 
-/**
- * If we had any associations to make, this would be a great place to put them!
- * ex. if we had another model called BlogPost, we might say:
- *
- *    BlogPost.belongsTo(User)
- */
+GithubAcct.hasMany(Repo, {as: 'repo'})
+Repo.belongsTo(GithubAcct, {as: 'acctOwner'})
 
-/**
- * We'll export all of our models here, so that any time a module needs a model,
- * we can just require it from 'db/models'
- * for example, we can say: const {User} = require('../db/models')
- * instead of: const User = require('../db/models/user')
- */
+Repo.hasMany(Language, { as: 'language'})
+Language.belongsTo(Repo, { as: 'repo'})
+
 module.exports = {
-  User
+  User,
+  GithubAcct,
+  Repo,
+  Language
 }
