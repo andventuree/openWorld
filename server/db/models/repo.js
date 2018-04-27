@@ -6,10 +6,10 @@ const Repo = db.define('repo', {
     type: Sequelize.TEXT
   },
   repoStarted: {
-    type: Sequelize.DATE
+    type: Sequelize.STRING
   },
   repoLatestUpdate: {
-    type: Sequelize.DATE
+    type: Sequelize.STRING
   },
   license: {
     type: Sequelize.STRING

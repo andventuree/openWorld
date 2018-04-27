@@ -11,7 +11,7 @@ const GithubAcct = db.define('githubAcct', {
     allowNull: false
   },
   publicRepos: {
-    type: Sequelize.Integer,
+    type: Sequelize.INTEGER,
     defaultValue: 0
   }
 })
