@@ -27,7 +27,6 @@ export const getAccountDetails = accountName =>
       }
     })
     .then((allRepos) => {
-      console.log('allRepos: ', allRepos);
       if (!allRepos.length === 0){ return console.log('This account does not have any repos.')}
       else {
         let combinedRepos = allRepos.reduce((arr, repo) => {

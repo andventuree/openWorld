@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getAccountDetails } from '../store'
+import { Input } from 'semantic-ui-react'
 
 class SearchBar extends Component{
   constructor(props){
@@ -25,24 +26,27 @@ class SearchBar extends Component{
   }
 
   render(){
+    const acct = this.props.acctDetails;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input
-          name="accountName"
-          onChange={this.handleChange}
-          placeholder="GitHub Account"
-          value={this.state.accountName}
-          style={{width: '80%'}}
-        />
-        <button type="submit">Show me free stuff!</button>
-      </form>
+        <form onSubmit={this.handleSubmit}>
+          <Input
+            icon="users"
+            iconPosition="left"
+            size="massive"
+            name="accountName"
+            onChange={this.handleChange}
+            placeholder="Search organizations..."
+            value={this.state.accountName}
+            style={{width: '30%'}}
+          />
+        </form>
     )
   }
 }
 
 const mapState = state => {
   return {
-    accountDetails: state.acctDetails
+    acctDetails: state.acctDetails
   }
 }
 
