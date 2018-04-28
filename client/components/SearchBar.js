@@ -26,7 +26,6 @@ class SearchBar extends Component{
   }
 
   render(){
-    const acct = this.props.acctDetails;
     return (
         <form onSubmit={this.handleSubmit}>
           <Input

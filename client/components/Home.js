@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import {SearchBar, AccountDetails} from '../components'
+import {SearchBar, AccountDetails, BubbleChart} from '../components'
 
 class Home extends Component {
   render(){
@@ -9,6 +9,7 @@ class Home extends Component {
       <div>
         <SearchBar />
         { acctDetails && <AccountDetails />}
+        { repoDetails && <BubbleChart />}
       </div>
     )
   }
