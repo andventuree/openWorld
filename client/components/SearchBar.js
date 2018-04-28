@@ -34,7 +34,7 @@ class SearchBar extends Component{
           value={this.state.accountName}
           style={{width: '80%'}}
         />
-        <button type="submit">Fetch me data!</button>
+        <button type="submit">Show me free stuff!</button>
       </form>
     )
   }
