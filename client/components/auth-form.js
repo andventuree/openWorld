@@ -27,8 +27,9 @@ const AuthForm = (props) => {
         <Grid.Column style={{ maxWidth: 450 }}>
         <Form size="large" onSubmit={handleSubmit} name={name}>
           <Segment stacked>
-            <Button color='blue' href="/auth/github">
-              <Icon name='github' /> {displayName} with GitHub
+            <Button color='white' href="/auth/github">
+              <img src='http://chittagongit.com//images/github-icon-svg/github-icon-svg-14.jpg'
+              placeholder='octocat picture should be here' />
             </Button>
           </Segment>
         </Form>
@@ -79,3 +80,6 @@ AuthForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }
+
+
+// <Icon name='github' /> {displayName} with GitHub

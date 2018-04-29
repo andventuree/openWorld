@@ -1,15 +1,16 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import {SearchBar, AccountDetails, BubbleChart} from '../components'
+import {SearchBar, AccountDetails, BubbleChart, StatBar } from '../components'
 
 class Home extends Component {
   render(){
     const {acctDetails, repoDetails} = this.props
     return (
       <div>
-        <SearchBar />
-        { acctDetails && <AccountDetails />}
-        { repoDetails && <BubbleChart />}
+        <div>
+          <SearchBar />
+          { acctDetails && <StatBar acctDetails={acctDetails} /> }
+        </div>
       </div>
     )
   }
@@ -23,3 +24,6 @@ const mapState = (state) => {
 }
 export default connect(mapState)(Home);
 
+
+// { acctDetails && <AccountDetails />}
+// { repoDetails && <BubbleChart />}
