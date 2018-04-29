@@ -1,17 +1,18 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {SearchBar, StatBar, RepoDetails } from '../components'
+import { SearchBar, StatBar, RepoDetails } from '../components'
 import { Container, Grid } from 'semantic-ui-react'
 
 class Home extends Component {
   render(){
-    const {acctDetails, repoDetails} = this.props
+    console.log('this.props in Home component: ', this.props);
+    const { acctDetails } = this.props
     return (
       <div>
-      {console.log('repoDetails: ', repoDetails)}
         <SearchBar />
         { acctDetails && <StatBar acctDetails={acctDetails} /> }
-        { acctDetails && <RepoDetails /> }
+        <div>This already shows in home page</div>
+        { acctDetails && <RepoDetails acctDetails={acctDetails} /> }
       </div>
     )
   }
@@ -19,8 +20,7 @@ class Home extends Component {
 
 const mapState = (state) => {
   return {
-    acctDetails: state.SearchBar.acctDetails,
-    repoDetails: state.SearchBar.repoDetails
+    acctDetails: state.SearchBar.acctDetails
   }
 }
 export default connect(mapState)(Home);
@@ -28,4 +28,5 @@ export default connect(mapState)(Home);
 
 // { acctDetails && <AccountDetails />}
 // { repoDetails && <BubbleChart />}
+// { repoDetails && <h1>repoDetails is available</h1> }
 

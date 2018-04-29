@@ -19,7 +19,6 @@ function StatBar({acctDetails}){
           <Statistic.Value>{memberSignUpDate}</Statistic.Value>
           <Statistic.Label>GitHub Member Since</Statistic.Label>
         </Statistic>
-
     </Statistic.Group>
   )
 }
