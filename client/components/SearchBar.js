@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getAccountDetails } from '../store'
-import { Input } from 'semantic-ui-react'
+import { Input, Segment } from 'semantic-ui-react'
 
 class SearchBar extends Component{
   constructor(props){
@@ -27,6 +27,7 @@ class SearchBar extends Component{
     return (
       <form onSubmit={this.handleSubmit}>
         <Input
+          fluid
           icon="users"
           iconPosition="left"
           size="massive"
@@ -34,7 +35,6 @@ class SearchBar extends Component{
           onChange={this.handleChange}
           placeholder="Search organizations..."
           value={this.state.accountName}
-          style={{width: '30%'}}
         />
       </form>
     )
@@ -56,3 +56,5 @@ const mapDispatch = dispatch => {
 }
 
 export default connect(mapState, mapDispatch)(SearchBar);
+
+// style={{width: '30%'}}
