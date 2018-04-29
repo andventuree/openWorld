@@ -1,7 +1,7 @@
 import React from 'react'
-import { Image, Statistic } from 'semantic-ui-react'
+import { Statistic } from 'semantic-ui-react'
 
-const StatBar = ({acctDetails}) => {
+function StatBar({acctDetails}){
   let memberSignUpDate = acctDetails.created_at.slice(0, 4)
   return (
     <Statistic.Group widths='three'>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getAccountDetails } from '../store'
-import { Input, Segment } from 'semantic-ui-react'
+import { Input } from 'semantic-ui-react'
 
 class SearchBar extends Component{
   constructor(props){

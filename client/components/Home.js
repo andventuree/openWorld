@@ -1,16 +1,17 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import {SearchBar, AccountDetails, BubbleChart, StatBar } from '../components'
+import {SearchBar, StatBar, RepoDetails } from '../components'
+import { Container, Grid } from 'semantic-ui-react'
 
 class Home extends Component {
   render(){
     const {acctDetails, repoDetails} = this.props
     return (
       <div>
-        <div>
-          <SearchBar />
-          { acctDetails && <StatBar acctDetails={acctDetails} /> }
-        </div>
+      {console.log('repoDetails: ', repoDetails)}
+        <SearchBar />
+        { acctDetails && <StatBar acctDetails={acctDetails} /> }
+        { acctDetails && <RepoDetails /> }
       </div>
     )
   }
@@ -27,3 +28,4 @@ export default connect(mapState)(Home);
 
 // { acctDetails && <AccountDetails />}
 // { repoDetails && <BubbleChart />}
+
