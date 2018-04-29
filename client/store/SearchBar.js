@@ -18,13 +18,28 @@ export const getAccountDetails = accountName =>
   dispatch => {
     return axios.get(`https://api.github.com/orgs/${accountName}`)
     .then(acctDetails => {
-      if (!acctDetails) { return console.log('There is no account by such name.') }
+      if (!acctDetails) { console.log('There is no account by such name.') }
       else {
+        console.log('---------->acctDetails: ', acctDetails.data);
         dispatch(getAcctData(acctDetails.data))
+        let githubAcctData = {
+          name: acctDetails.data.name.toLowerCase(),
+          accountType: acctDetails.data.type,
+          publicRepos: acctDetails.data.public_repos,
+          publicGists: acctDetails.data.public_gists,
+          membershipStart: acctDetails.data.created_at
+        }
+        return axios.post(`/api/githubAcct/${acctDetails.data.name.toLowerCase()}`, githubAcctData)
       }
     })
+    .then(() => console.log('new account posted to DB'))
     .catch(err => console.error(err))
   }
+
+// export const fetchAcctFromDB = accountName =>
+//   dispatch => {
+//     return axios.get('/api/')
+//   }
 
 export const getRepoDetails = (accountName, numOfRepos) =>
   dispatch => {
@@ -36,7 +51,23 @@ export const getRepoDetails = (accountName, numOfRepos) =>
         let combinedRepos = allRepos.reduce((arr, nextPage) => {
           return arr.concat(nextPage.data)
         }, [])
-        dispatch(getRepoData(combinedRepos))
+        console.log('combinedRepos: ', combinedRepos);
+        // dispatch(getRepoData(combinedRepos))
+        combinedRepos.forEach(repo => {
+          // let santizedLicense = !repo.license.name ? 'License not specified' : repo.license.name;
+          let repoData = {
+            name: repo.name.toLowerCase(),
+            description: repo.description,
+            repoStarted: repo.created_at,
+            htmlURL: repo.html_url,
+            size: repo.size,
+            watchers: repo.watchers_count,
+            forks: repo.forks_count,
+            // license: santizedLicense,
+          }
+          axios.post(`/api/repo/${accountName.toLowerCase()}`, repoData)
+          .then(() => console.log(`${repo.name} saved to DB`))
+        })
       }
     })
     .then(console.log('!!!Acct and repo details have been fetched!!! Repo divs should show!!!'))
