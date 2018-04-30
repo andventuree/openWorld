@@ -52,7 +52,7 @@ export const getRepoDetails = (accountName, numOfRepos) =>
           return arr.concat(nextPage.data)
         }, [])
         console.log('combinedRepos: ', combinedRepos);
-        // dispatch(getRepoData(combinedRepos))
+        dispatch(getRepoData(combinedRepos))
         combinedRepos.forEach(repo => {
           // let santizedLicense = !repo.license.name ? 'License not specified' : repo.license.name;
           let repoData = {
@@ -63,6 +63,7 @@ export const getRepoDetails = (accountName, numOfRepos) =>
             size: repo.size,
             watchers: repo.watchers_count,
             forks: repo.forks_count,
+            owner: accountName.toLowerCase()
             // license: santizedLicense,
           }
           axios.post(`/api/repo/${accountName.toLowerCase()}`, repoData)

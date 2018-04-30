@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getRepoDetails } from '../store'
+import { getRepoDetails, fetchRepoDB } from '../store'
 
 class RepoDetails extends Component {
   constructor(props){
@@ -20,6 +20,7 @@ class RepoDetails extends Component {
   }
 
   handleClick(){
+    this.props.fetchRepoDB(this.props.acctDetails.name)
     this.setState({showRepos: true, repos: this.props.Booger.SearchBar.repoDetails})
     console.log(this.state);
   }
@@ -52,17 +53,13 @@ const mapDispatch = dispatch => {
   return {
     loadRepoDetails: function(accountName, numOfRepos){
       dispatch(getRepoDetails(accountName, numOfRepos))
+    },
+    loadRepoDB: function(accountName){
+      dispatch(fetchRepoDB(accountName))
     }
   }
 }
 
 export default connect(mapState, mapDispatch)(RepoDetails)
-
-// { this.state.showRepos && this.props.repos.map(repo => {
-//   return (
-//       <span key={repo.id}>{repo.name}</span>
-//     )
-//   })
-// }
 
 //should have a PropTypes thing to confirm parameters put in are what they are!

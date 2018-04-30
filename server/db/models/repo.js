@@ -25,6 +25,9 @@ const Repo = db.define('repo', {
   },
   forks: {
     type: Sequelize.INTEGER
+  },
+  owner: {
+    type: Sequelize.STRING
   }
 })
 

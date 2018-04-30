@@ -33,17 +33,10 @@ router.post('/:githubAcctName', (req, res, next) => {
 
 // GET /api/repo/:githubAcctName
 router.get('/:githubAcctName', (req, res, next) => {
-  Repo.find({where: { name: req.params.githubAcctName }})
+  Repo.findAll({where: { owner: req.params.githubAcctName }})
   .then(specificRepos => {
     if (!specificRepos) res.status(404).send('No repos saved for this account')
     else res.json(specificRepos)
   })
   .catch(next)
 })
-
-
-// console.log('--------->setGithubAcct: ');
-// repo.setGithubAcct(acct.id)
-// .then(() => console.log('Assigned repo to GithubAcctId'))
-// .then(() => res.json(repo))
-// .catch(next)
