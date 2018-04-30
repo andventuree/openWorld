@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
-import { Container, Button, Form, Grid, Message, Segment, Icon } from 'semantic-ui-react'
+import { Image, Container, Button, Form, Grid, Message, Segment, Icon } from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -28,8 +28,7 @@ const AuthForm = (props) => {
         <Form size="large" onSubmit={handleSubmit} name={name}>
           <Container>
             <Button href="/auth/github" >
-            <img src='http://chittagongit.com//images/github-icon-svg/github-icon-svg-14.jpg'
-            placeholder='octocat picture should be here' circular/>
+            <Image src='http://chittagongit.com//images/github-icon-svg/github-icon-svg-14.jpg' size='medium' centered circular />
             </Button>
           </Container>
         </Form>

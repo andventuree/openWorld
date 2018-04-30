@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getRepoDetails, fetchAcctFromDB } from '../store'
-import { Container, Grid, Segment, Table, Header, Rating } from 'semantic-ui-react'
+import { Container, Grid, Segment, Table, Header, Rating, Button, Divider } from 'semantic-ui-react'
 
 class RepoDetails extends Component {
   constructor(props){
@@ -35,24 +35,12 @@ class RepoDetails extends Component {
     return (
       <div>
       <Container textAlign='center'>
-        <button onClick={this.handleClick}>click me for repos</button>
+        <Divider hidden/>
+        <Button onClick={this.handleClick}>click me for repos</Button>
+        <Divider hidden/>
       </Container>
       <Container >
         <Segment>
-        <Grid>
-          <div>This should display repo data.</div>
-            <Grid.Row>
-              <Grid.Column width={4}>Name</Grid.Column>
-              <Grid.Column width={4}>Date started</Grid.Column>
-              <Grid.Column width={4}>Watchers</Grid.Column>
-              <Grid.Column width={4}>Forks</Grid.Column>
-            </Grid.Row>
-          { this.state.showRepos && this.props.repos.map(repo => (
-              <div style={{background: 'white'}}>{repo.name}</div>
-          ))
-          }
-        </Grid>
-
         <Table celled padded>
           <Table.Header>
             <Table.Row>
@@ -121,3 +109,16 @@ export default connect(mapState, mapDispatch)(RepoDetails)
 //     <Grid.Column width={6} />
 //     </Grid.Row>
 //   </Grid>
+
+// <Grid>
+// <Grid.Row>
+//   <Grid.Column width={4}>Name</Grid.Column>
+//   <Grid.Column width={4}>Date started</Grid.Column>
+//   <Grid.Column width={4}>Watchers</Grid.Column>
+//   <Grid.Column width={4}>Forks</Grid.Column>
+// </Grid.Row>
+// { this.state.showRepos && this.props.repos.map(repo => (
+//   <div style={{background: 'white'}}>{repo.name}</div>
+// ))
+// }
+// </Grid>

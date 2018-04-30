@@ -22,7 +22,7 @@ export const getAccountDetails = accountName =>
     .then(acctDetails => {
       if (!acctDetails) { console.log('There is no account by such name.') }
       else {
-        console.log('---------->acctDetails: ', acctDetails.data);
+        console.log('--->acctDetails: ', acctDetails.data);
         dispatch(getAcctData(acctDetails.data))
         let githubAcctData = {
           name: acctDetails.data.name.toLowerCase(),
@@ -79,7 +79,6 @@ export const getRepoDetails = (accountName, numOfRepos) =>
         })
       }
     })
-    .then(console.log('!!!Acct and repo details have been fetched!!! Repo divs should show!!!'))
     .catch(err => console.error(err))
   }
 
