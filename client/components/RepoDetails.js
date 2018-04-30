@@ -13,22 +13,22 @@ class RepoDetails extends Component {
   }
 
   componentDidMount(){
-    const accountName = this.props.acctDetails.name
-    const numOfRepos = this.props.acctDetails.public_repos
-    this.props.loadRepoDetails(accountName, numOfRepos)
+    // const accountName = this.props.acctDetails.name
+    // const numOfRepos = this.props.acctDetails.public_repos
+    // this.props.loadRepoDetails(accountName, numOfRepos)
     console.log('Loading the RepoDetails Component', this.props);
   }
 
   handleClick(){
-    this.props.loadRepoDB(this.props.acctDetails.name.toLowerCase())
-    this.setState({showRepos: true})
+    // this.props.loadRepoDB(this.props.acctDetails.name.toLowerCase())
+    // this.setState({showRepos: true})
     // this.setState({showRepos: true, repos: this.props.repos, repoDetails: this.props.repoDetails})
     console.log(this.state);
   }
 
   shouldComponentUpdate(){
-    if (this.state.showRepos) return true
-    else return false
+    // if (this.state.showRepos) return true
+    // else return false
   }
 
   render(){

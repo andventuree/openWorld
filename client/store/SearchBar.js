@@ -8,6 +8,11 @@ const promiseArr = (accountName, fetches) => {
   return moreRequests;
 }
 
+let initialState = {
+  repoDetails: [],
+  repos: []
+}
+
 const GET_ACCT_DATA = 'GET_ACCT_DATA'
 const GET_REPO_DATA = 'GET_REPO_DATA'
 const FETCH_DB_REPO = 'FETCH_DB_REPO'
@@ -24,20 +29,36 @@ export const getAccountDetails = accountName =>
       else {
         console.log('--->acctDetails: ', acctDetails.data);
         dispatch(getAcctData(acctDetails.data))
-        let githubAcctData = {
-          name: acctDetails.data.name.toLowerCase(),
-          accountType: acctDetails.data.type,
-          publicRepos: acctDetails.data.public_repos,
-          publicGists: acctDetails.data.public_gists,
-          membershipStart: acctDetails.data.created_at,
-          avatarURL: acctDetails.data.avatar_url
-        }
-        return axios.post(`/api/githubAcct/${acctDetails.data.name.toLowerCase()}`, githubAcctData)
+        return acctDetails;
+        // let githubAcctData = {
+        //   name: acctDetails.data.name.toLowerCase(),
+        //   accountType: acctDetails.data.type,
+        //   publicRepos: acctDetails.data.public_repos,
+        //   publicGists: acctDetails.data.public_gists,
+        //   membershipStart: acctDetails.data.created_at,
+        //   avatarURL: acctDetails.data.avatar_url
+        // }
+        // return axios.post(`/api/githubAcct/${acctDetails.data.name.toLowerCase()}`, githubAcctData)
       }
+    })
+    .then(acctDetails => {
+      let pageRequests = Math.ceil(acctDetails.data.public_repos / 100);
+      Promise.all(promiseArr(acctDetails.data.name, pageRequests))
+      .then((allRepos) => {
+        if (!allRepos.length === 0){ return console.log('This account does not have any repos.')}
+        else {
+          let combinedRepos = allRepos.reduce((arr, nextPage) => {
+            return arr.concat(nextPage.data)
+          }, [])
+          console.log(`${accountName}'s Repos: `, combinedRepos);
+          dispatch(getRepoData(combinedRepos))
+        }
+      })
     })
     .then(() => console.log('new account posted to DB'))
     .catch(err => console.error(err))
   }
+
 
 export const fetchAcctFromDB = accountName =>
   dispatch => {
@@ -82,7 +103,7 @@ export const getRepoDetails = (accountName, numOfRepos) =>
     .catch(err => console.error(err))
   }
 
-export default function (state = {}, action){
+export default function (state = initialState, action){
   switch (action.type){
     case GET_ACCT_DATA:
       return { acctDetails: action.acctDetails }
