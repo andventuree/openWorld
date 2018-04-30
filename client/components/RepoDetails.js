@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getRepoDetails, fetchAcctFromDB } from '../store'
-import { Container, Grid } from 'semantic-ui-react'
+import { Container, Grid, Segment } from 'semantic-ui-react'
 
 class RepoDetails extends Component {
   constructor(props){
@@ -37,21 +37,15 @@ class RepoDetails extends Component {
       <Container textAlign='center'>
         <button onClick={this.handleClick}>click me for repos</button>
       </Container>
-      <Container style={{background: 'white'}}>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column width={6} />
-            <Grid.Column width={4}>
-             <div>This should display repo data.</div></Grid.Column>
-            <Grid.Column width={6} />
-          </Grid.Row>
-
-        </Grid>
+      <Container >
+        <Segment>
+          <div>This should display repo data.</div>
+        { this.state.showRepos && this.props.repos.map(repo => (
+          <div style={{background: 'white'}}>{repo.name}</div>
+        ))
+        }
+      </Segment>
       </Container>
-      { this.state.showRepos && this.props.repos.map(repo => (
-        <div style={{background: 'white'}}>{repo.name}</div>
-      ))
-      }
       </div>
     )
   }
@@ -78,3 +72,11 @@ const mapDispatch = dispatch => {
 export default connect(mapState, mapDispatch)(RepoDetails)
 
 //should have a PropTypes thing to confirm parameters put in are what they are!
+
+// <Grid>
+//   <Grid.Row>
+//     <Grid.Column width={6} />
+//     <Grid.Column width={4}></Grid.Column>
+//     <Grid.Column width={6} />
+//     </Grid.Row>
+//   </Grid>

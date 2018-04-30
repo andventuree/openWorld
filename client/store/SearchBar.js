@@ -29,7 +29,8 @@ export const getAccountDetails = accountName =>
           accountType: acctDetails.data.type,
           publicRepos: acctDetails.data.public_repos,
           publicGists: acctDetails.data.public_gists,
-          membershipStart: acctDetails.data.created_at
+          membershipStart: acctDetails.data.created_at,
+          avatarURL: acctDetails.data.avatar_url
         }
         return axios.post(`/api/githubAcct/${acctDetails.data.name.toLowerCase()}`, githubAcctData)
       }
