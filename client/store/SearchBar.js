@@ -8,11 +8,18 @@ const promiseArr = (accountName, fetches) => {
   return moreRequests;
 }
 
+let initialState = {
+  // repoDetails: [],
+  repos: []
+}
+
 const GET_ACCT_DATA = 'GET_ACCT_DATA'
 const GET_REPO_DATA = 'GET_REPO_DATA'
+const FETCH_DB_REPO = 'FETCH_DB_REPO'
 
 export const getAcctData = (acctDetails) => ({type: GET_ACCT_DATA, acctDetails})
 export const getRepoData = (repoDetails) => ({type: GET_REPO_DATA, repoDetails})
+export const fetchDBRepo = (repos) => ({type: FETCH_DB_REPO, repos})
 
 export const getAccountDetails = accountName =>
   dispatch => {
@@ -20,26 +27,48 @@ export const getAccountDetails = accountName =>
     .then(acctDetails => {
       if (!acctDetails) { console.log('There is no account by such name.') }
       else {
-        console.log('---------->acctDetails: ', acctDetails.data);
+        // console.log('--->acctDetails: ', acctDetails.data);
         dispatch(getAcctData(acctDetails.data))
-        let githubAcctData = {
-          name: acctDetails.data.name.toLowerCase(),
-          accountType: acctDetails.data.type,
-          publicRepos: acctDetails.data.public_repos,
-          publicGists: acctDetails.data.public_gists,
-          membershipStart: acctDetails.data.created_at
-        }
-        return axios.post(`/api/githubAcct/${acctDetails.data.name.toLowerCase()}`, githubAcctData)
+        return acctDetails;
+        // let githubAcctData = {
+        //   name: acctDetails.data.name.toLowerCase(),
+        //   accountType: acctDetails.data.type,
+        //   publicRepos: acctDetails.data.public_repos,
+        //   publicGists: acctDetails.data.public_gists,
+        //   membershipStart: acctDetails.data.created_at,
+        //   avatarURL: acctDetails.data.avatar_url
+        // }
+        // return axios.post(`/api/githubAcct/${acctDetails.data.name.toLowerCase()}`, githubAcctData)
       }
+    })
+    .then(acctDetails => {
+      let pageRequests = Math.ceil(acctDetails.data.public_repos / 100);
+      Promise.all(promiseArr(acctDetails.data.name, pageRequests))
+      .then((allRepos) => {
+        if (!allRepos.length === 0){ return console.log('This account does not have any repos.')}
+        else {
+          let combinedRepos = allRepos.reduce((arr, nextPage) => {
+            return arr.concat(nextPage.data)
+          }, [])
+          console.log(`${accountName}'s Repos: `, combinedRepos);
+          dispatch(getRepoData(combinedRepos))
+        }
+      })
     })
     .then(() => console.log('new account posted to DB'))
     .catch(err => console.error(err))
   }
 
-// export const fetchAcctFromDB = accountName =>
-//   dispatch => {
-//     return axios.get('/api/')
-//   }
+
+export const fetchAcctFromDB = accountName =>
+  dispatch => {
+    return axios.get(`/api/repo/${accountName}`)
+    .then(res => {
+      console.log('res: ', res);
+      dispatch(fetchDBRepo(res.data))
+    })
+    .catch(err => console.error(err))
+  }
 
 export const getRepoDetails = (accountName, numOfRepos) =>
   dispatch => {
@@ -51,7 +80,7 @@ export const getRepoDetails = (accountName, numOfRepos) =>
         let combinedRepos = allRepos.reduce((arr, nextPage) => {
           return arr.concat(nextPage.data)
         }, [])
-        console.log('combinedRepos: ', combinedRepos);
+        console.log(`${accountName}'s Repos: `, combinedRepos);
         dispatch(getRepoData(combinedRepos))
         combinedRepos.forEach(repo => {
           // let santizedLicense = !repo.license.name ? 'License not specified' : repo.license.name;
@@ -71,16 +100,17 @@ export const getRepoDetails = (accountName, numOfRepos) =>
         })
       }
     })
-    .then(console.log('!!!Acct and repo details have been fetched!!! Repo divs should show!!!'))
     .catch(err => console.error(err))
   }
 
-export default function (state = {}, action){
+export default function (state = initialState, action){
   switch (action.type){
     case GET_ACCT_DATA:
       return { acctDetails: action.acctDetails }
     case GET_REPO_DATA:
       return Object.assign( state, { repoDetails: action.repoDetails })
+    case FETCH_DB_REPO:
+      return Object.assign( state, { repos: action.repos })
     default:
       return state;
   }

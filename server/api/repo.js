@@ -21,10 +21,8 @@ router.post('/:githubAcctName', (req, res, next) => {
     if (!acct){
       res.status(404).send('Cannot find github account to update')
     } else {
-      Repo.create(req.body)
-      .then(repo => {
-        res.json(repo)
-      })
+      return Repo.create(req.body)
+      .then(repo => res.json(repo))
     }
   })
   .then(() => console.log('Repo saved'))

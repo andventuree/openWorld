@@ -43,7 +43,7 @@ class SearchBar extends Component{
 
 const mapState = state => {
   return {
-    acctDetails: state.acctDetails
+    // acctDetails: state.acctDetails
   }
 }
 
