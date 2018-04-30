@@ -59,7 +59,7 @@ export const getRepoDetails = (accountName, numOfRepos) =>
         let combinedRepos = allRepos.reduce((arr, nextPage) => {
           return arr.concat(nextPage.data)
         }, [])
-        console.log('combinedRepos: ', combinedRepos);
+        console.log(`${accountName}'s Repos: `, combinedRepos);
         dispatch(getRepoData(combinedRepos))
         combinedRepos.forEach(repo => {
           // let santizedLicense = !repo.license.name ? 'License not specified' : repo.license.name;
