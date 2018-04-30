@@ -11,7 +11,6 @@ class Home extends Component {
       <div>
         <SearchBar />
         { acctDetails && <StatBar acctDetails={acctDetails} /> }
-        <div>This already shows in home page</div>
         { acctDetails && <RepoDetails acctDetails={acctDetails} /> }
       </div>
     )
@@ -23,10 +22,4 @@ const mapState = (state) => {
     acctDetails: state.SearchBar.acctDetails
   }
 }
-export default connect(mapState)(Home);
-
-
-// { acctDetails && <AccountDetails />}
-// { repoDetails && <BubbleChart />}
-// { repoDetails && <h1>repoDetails is available</h1> }
-
+export default connect(mapState)(Home)

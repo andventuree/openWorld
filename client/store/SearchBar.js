@@ -10,9 +10,11 @@ const promiseArr = (accountName, fetches) => {
 
 const GET_ACCT_DATA = 'GET_ACCT_DATA'
 const GET_REPO_DATA = 'GET_REPO_DATA'
+const FETCH_DB_REPO = 'FETCH_DB_REPO'
 
 export const getAcctData = (acctDetails) => ({type: GET_ACCT_DATA, acctDetails})
 export const getRepoData = (repoDetails) => ({type: GET_REPO_DATA, repoDetails})
+export const fetchDBRepo = (repos) => ({type: FETCH_DB_REPO, repos})
 
 export const getAccountDetails = accountName =>
   dispatch => {
@@ -36,10 +38,15 @@ export const getAccountDetails = accountName =>
     .catch(err => console.error(err))
   }
 
-// export const fetchAcctFromDB = accountName =>
-//   dispatch => {
-//     return axios.get('/api/')
-//   }
+export const fetchAcctFromDB = accountName =>
+  dispatch => {
+    return axios.get(`/api/repo/${accountName}`)
+    .then(res => {
+      console.log('res: ', res);
+      dispatch(fetchDBRepo(res.data))
+    })
+    .catch(err => console.error(err))
+  }
 
 export const getRepoDetails = (accountName, numOfRepos) =>
   dispatch => {
@@ -81,6 +88,8 @@ export default function (state = {}, action){
       return { acctDetails: action.acctDetails }
     case GET_REPO_DATA:
       return Object.assign( state, { repoDetails: action.repoDetails })
+    case FETCH_DB_REPO:
+      return Object.assign( state, { repos: action.repos })
     default:
       return state;
   }
