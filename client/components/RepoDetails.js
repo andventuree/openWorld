@@ -1,27 +1,65 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { getRepoDetails, fetchRepoDB } from '../store'
 
-function RepoDetails(){
-  const { repoDetails } = this.props
-  console.log('In side Repo details Component');
-  console.log('repoDetails: ', repoDetails);
-  return (
-    <div>
+class RepoDetails extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      showRepos: false
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  componentDidMount(){
+    const accountName = this.props.acctDetails.name
+    const numOfRepos = this.props.acctDetails.public_repos
+    this.props.loadRepoDetails(accountName, numOfRepos)
+    console.log('Loading the RepoDetails Component');
+    console.log('this.props: ', this.props);
+  }
+
+  handleClick(){
+    this.props.fetchRepoDB(this.props.acctDetails.name)
+    this.setState({showRepos: true, repos: this.props.Booger.SearchBar.repoDetails})
+    console.log(this.state);
+  }
+
+  shouldComponentUpdate(){
+    if (this.state.showRepos) return true
+    else return false
+  }
+
+  render(){
+    return (
+      <div>
       <div>Show some dummy div for now, repos should load below</div>
-      { repoDetails && repoDetails.map(repo => {
-        return (
-          <span>{repo.name}</span>
-        )
-      })
+      <button onClick={this.handleClick}>click me for repos</button>
+      { this.state.showRepos &&
+            <div>{this.props.Booger.SearchBar.repoDetails[1].name}</div>
       }
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 const mapState = state => {
   return {
-    repoDetails: state.repoDetails
+    Booger: state
   }
 }
 
-export default connect(mapState)(RepoDetails)
+const mapDispatch = dispatch => {
+  return {
+    loadRepoDetails: function(accountName, numOfRepos){
+      dispatch(getRepoDetails(accountName, numOfRepos))
+    },
+    loadRepoDB: function(accountName){
+      dispatch(fetchRepoDB(accountName))
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(RepoDetails)
+
+//should have a PropTypes thing to confirm parameters put in are what they are!

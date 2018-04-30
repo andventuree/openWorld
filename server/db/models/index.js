@@ -3,11 +3,11 @@ const GithubAcct = require('./githubAcct')
 const Repo = require('./repo')
 const Language = require('./language')
 
-GithubAcct.hasMany(Repo, {as: 'repo'})
-Repo.belongsTo(GithubAcct, {as: 'acctOwner'})
+GithubAcct.hasMany(Repo)
+Repo.belongsTo(GithubAcct)
 
-Repo.hasMany(Language, { as: 'language'})
-Language.belongsTo(Repo, { as: 'repo'})
+Repo.hasMany(Language)
+Language.belongsTo(Repo)
 
 module.exports = {
   User,

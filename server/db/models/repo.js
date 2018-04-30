@@ -2,21 +2,38 @@ const Sequelize = require('sequelize');
 const db = require('../db')
 
 const Repo = db.define('repo', {
-  description: {
+  name: {
     type: Sequelize.TEXT
+  },
+  description: {
+    type: Sequelize.TEXT,
+    validate: {
+      len: [1, 300]
+    }
   },
   repoStarted: {
     type: Sequelize.STRING
   },
-  repoLatestUpdate: {
+  htmlURL: {
     type: Sequelize.STRING
   },
-  license: {
-    type: Sequelize.STRING
-  },
-  openIssue: {
+  size: {
     type: Sequelize.INTEGER
+  },
+  watchers: {
+    type: Sequelize.INTEGER
+  },
+  forks: {
+    type: Sequelize.INTEGER
+  },
+  owner: {
+    type: Sequelize.STRING
   }
 })
 
 module.exports = Repo
+
+// license: {
+//   type: Sequelize.STRING,
+//   allowNull: true
+// }

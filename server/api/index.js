@@ -3,6 +3,7 @@ module.exports = router
 
 router.use('/users', require('./users'))
 router.use('/githubAcct', require('./githubAcct'))
+router.use('/repo', require('./repo'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

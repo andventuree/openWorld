@@ -13,6 +13,13 @@ const GithubAcct = db.define('githubAcct', {
   publicRepos: {
     type: Sequelize.INTEGER,
     defaultValue: 0
+  },
+  publicGists: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  membershipStart: {
+    type: Sequelize.STRING
   }
 })
 
