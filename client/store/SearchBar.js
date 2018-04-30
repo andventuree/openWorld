@@ -9,7 +9,7 @@ const promiseArr = (accountName, fetches) => {
 }
 
 let initialState = {
-  repoDetails: [],
+  // repoDetails: [],
   repos: []
 }
 
@@ -27,7 +27,7 @@ export const getAccountDetails = accountName =>
     .then(acctDetails => {
       if (!acctDetails) { console.log('There is no account by such name.') }
       else {
-        console.log('--->acctDetails: ', acctDetails.data);
+        // console.log('--->acctDetails: ', acctDetails.data);
         dispatch(getAcctData(acctDetails.data))
         return acctDetails;
         // let githubAcctData = {

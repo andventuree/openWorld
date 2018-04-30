@@ -21,14 +21,9 @@ class RepoDetails extends Component {
 
   handleClick(){
     // this.props.loadRepoDB(this.props.acctDetails.name.toLowerCase())
-    // this.setState({showRepos: true})
+    this.setState({showRepos: true})
     // this.setState({showRepos: true, repos: this.props.repos, repoDetails: this.props.repoDetails})
     console.log(this.state);
-  }
-
-  shouldComponentUpdate(){
-    // if (this.state.showRepos) return true
-    // else return false
   }
 
   render(){
@@ -39,6 +34,11 @@ class RepoDetails extends Component {
         <Button onClick={this.handleClick}>click me for repos</Button>
         <Divider hidden/>
       </Container>
+      { this.state.showRepos && this.props.repoDetails.map(repo => {
+        return (<Segment>{repo.name}</Segment>)
+      })
+      }
+
       <Container >
         <Segment>
         <Table celled padded>
@@ -55,19 +55,13 @@ class RepoDetails extends Component {
           <Table.Body>
             <Table.Row>
               <Table.Cell>
-                <Header as='h3' textAlign='left'>A</Header>
+                <Header as='h3' textAlign='left'>swift-protobuf</Header>
               </Table.Cell>
-              <Table.Cell singleLine>Power Output</Table.Cell>
+              <Table.Cell singleLine>2016</Table.Cell>
+              <Table.Cell>1800</Table.Cell>
+              <Table.Cell>152</Table.Cell>
               <Table.Cell>
-                <Rating icon='star' defaultRating={3} maxRating={3} />
-              </Table.Cell>
-              <Table.Cell textAlign='right'>
-                  80% <br />
-                <a href='#'>18 studies</a>
-              </Table.Cell>
-              <Table.Cell>
-                  Creatine supplementation is the reference compound for increasing muscular creatine levels; there is
-                  variability in this increase, however, with some nonresponders.
+                "Plugin and runtime library for using protobuf with Swift"
               </Table.Cell>
             </Table.Row>
           </Table.Body>
@@ -83,7 +77,7 @@ class RepoDetails extends Component {
 const mapState = state => {
   return {
     repos: state.SearchBar.repos,
-    repoDetail: state.SearchBar.repoDetail
+    // repoDetail: state.SearchBar.repoDetails
   }
 }
 
@@ -122,3 +116,6 @@ export default connect(mapState, mapDispatch)(RepoDetails)
 // ))
 // }
 // </Grid>
+
+
+
