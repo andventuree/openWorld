@@ -1,18 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { SearchBar, StatBar, RepoDetails } from '../components'
-import { Container, Grid } from 'semantic-ui-react'
+import { Banner, SearchBar, StatBar, RepoDetails } from '../components'
+import { Container, Divider } from 'semantic-ui-react'
 
 class Home extends Component {
   render(){
-    // console.log('this.props in Home component: ', this.props);
     const { acctDetails, repoDetails } = this.props
     return (
-      <div>
+      <Container>
+      <Divider hidden/>
+        <Container textAlign='center'>
+          <Banner />
+        </Container>
         <SearchBar />
         { acctDetails && <StatBar acctDetails={acctDetails} /> }
         { acctDetails && <RepoDetails repoDetails={repoDetails} /> }
-      </div>
+      </Container>
     )
   }
 }
@@ -23,4 +26,5 @@ const mapState = (state) => {
     repoDetails: state.SearchBar.repoDetails
   }
 }
+
 export default connect(mapState)(Home)

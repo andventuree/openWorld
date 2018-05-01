@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { getAccountDetails } from '../store'
 import { Input } from 'semantic-ui-react'
 
-class SearchBar extends Component{
+class SearchBar extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -30,7 +30,7 @@ class SearchBar extends Component{
           fluid
           icon="github"
           iconPosition="left"
-          size="massive"
+          size="big"
           name="accountName"
           onChange={this.handleChange}
           placeholder="Search organizations..."
@@ -38,12 +38,6 @@ class SearchBar extends Component{
         />
       </form>
     )
-  }
-}
-
-const mapState = state => {
-  return {
-    // acctDetails: state.acctDetails
   }
 }
 
@@ -55,6 +49,5 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(SearchBar);
+export default connect(null, mapDispatch)(SearchBar);
 
-// style={{width: '30%'}}
