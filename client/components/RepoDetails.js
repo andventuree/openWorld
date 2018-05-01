@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getRepoDetails, fetchAcctFromDB } from '../store'
 import { Container, Segment, Table, Header, Divider } from 'semantic-ui-react'
 
 class RepoDetails extends Component {
@@ -46,21 +45,4 @@ class RepoDetails extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    repos: state.SearchBar.repos,
-  }
-}
-
-const mapDispatch = dispatch => {
-  return {
-    loadRepoDetails: function(accountName, numOfRepos){
-      dispatch(getRepoDetails(accountName, numOfRepos))
-    },
-    loadRepoDB: function(accountName){
-      dispatch(fetchAcctFromDB(accountName))
-    }
-  }
-}
-
-export default connect(mapState, mapDispatch)(RepoDetails)
+export default connect()(RepoDetails)

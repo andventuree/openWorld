@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getAccountDetails } from '../store'
+import { getAcctAndRepoDetailsFromAPI } from '../store'
 import { Input } from 'semantic-ui-react'
 
 class SearchBar extends Component {
@@ -44,7 +44,7 @@ class SearchBar extends Component {
 const mapDispatch = dispatch => {
   return {
     getDetailsFrom: function(accountName){
-      dispatch(getAccountDetails(accountName))
+      dispatch(getAcctAndRepoDetailsFromAPI(accountName))
     }
   }
 }

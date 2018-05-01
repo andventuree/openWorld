@@ -1,6 +1,6 @@
 import axios from 'axios'
-
-const promiseArr = (accountName, fetches) => {
+// Helper functions
+const repoAPIFetch = (accountName, fetches) => {
   let moreRequests = [];
   for (let i = 1; i < fetches + 1; i++){
     moreRequests.push(axios.get(`https://api.github.com/orgs/${accountName}/repos?per_page=100&page=${i}`))
@@ -8,110 +8,97 @@ const promiseArr = (accountName, fetches) => {
   return moreRequests;
 }
 
+const formatAcctDataToDB = (accountAPIDetails) => {
+  return {
+    name: accountAPIDetails.name.toLowerCase(),
+    accountType: accountAPIDetails.type,
+    publicRepos: accountAPIDetails.public_repos,
+    publicGists: accountAPIDetails.public_gists,
+    membershipStart: accountAPIDetails.created_at,
+    avatarURL: accountAPIDetails.avatar_url
+  }
+}
+
+const formatRepoDataToDB = (repoAPIDetails, ownerName) => {
+  // console.log('Repo API data is sanitized');
+  return {
+    name: repoAPIDetails.name,
+    description: repoAPIDetails.description,
+    repoStarted: repoAPIDetails.created_at,
+    htmlURL: repoAPIDetails.html_url,
+    size: repoAPIDetails.size,
+    watchers: repoAPIDetails.watchers_count,
+    forks: repoAPIDetails.forks_count,
+    owner: ownerName.toLowerCase()
+  }
+}
+
 let initialState = {
   // repoDetails: [],
   repos: []
 }
 
-const GET_ACCT_DATA = 'GET_ACCT_DATA'
-const GET_REPO_DATA = 'GET_REPO_DATA'
-const FETCH_DB_REPO = 'FETCH_DB_REPO'
+const FETCH_ACCT_API = 'FETCH_ACCT_API'
+const FETCH_REPOS_API = 'FETCH_REPOS_API'
+const GET_REPOS_DB = 'GET_REPOS_DB'
 
-export const getAcctData = (acctDetails) => ({type: GET_ACCT_DATA, acctDetails})
-export const getRepoData = (repoDetails) => ({type: GET_REPO_DATA, repoDetails})
-export const fetchDBRepo = (repos) => ({type: FETCH_DB_REPO, repos})
+export const fetchAcctAPI = (account) => ({type: FETCH_ACCT_API, account})
+export const fetchReposAPI = (repos) => ({type: FETCH_REPOS_API, repos})
+export const getReposDB = (repos) => ({type: GET_REPOS_DB, repos})
 
-export const getAccountDetails = accountName =>
+export const getAcctAndRepoDetailsFromAPI = accountName =>
   dispatch => {
     return axios.get(`https://api.github.com/orgs/${accountName}`)
-    .then(acctDetails => {
-      if (!acctDetails) { console.log('There is no account by such name.') }
-      else {
-        // console.log('--->acctDetails: ', acctDetails.data);
-        dispatch(getAcctData(acctDetails.data))
-        return acctDetails;
-        // let githubAcctData = {
-        //   name: acctDetails.data.name.toLowerCase(),
-        //   accountType: acctDetails.data.type,
-        //   publicRepos: acctDetails.data.public_repos,
-        //   publicGists: acctDetails.data.public_gists,
-        //   membershipStart: acctDetails.data.created_at,
-        //   avatarURL: acctDetails.data.avatar_url
-        // }
-        // return axios.post(`/api/githubAcct/${acctDetails.data.name.toLowerCase()}`, githubAcctData)
-      }
+    .then(acctAPIResponse => {
+      let acctDataDBSafe = formatAcctDataToDB(acctAPIResponse.data) //for when we save to DB
+      dispatch(fetchAcctAPI(acctDataDBSafe))
+        return acctDataDBSafe;
+        // return axios.post(`/api/githubAcct/${acctAPIResponse.data.name.toLowerCase()}`, githubAcctData) //use to post to DB
     })
-    .then(acctDetails => {
-      let pageRequests = Math.ceil(acctDetails.data.public_repos / 100);
-      Promise.all(promiseArr(acctDetails.data.name, pageRequests))
-      .then((allRepos) => {
-        if (!allRepos.length === 0){ return console.log('This account does not have any repos.')}
-        else {
-          let combinedRepos = allRepos.reduce((arr, nextPage) => {
-            return arr.concat(nextPage.data)
-          }, [])
-          console.log(`${accountName}'s Repos: `, combinedRepos);
-          dispatch(getRepoData(combinedRepos))
-        }
+    .then(acctDataDBSafe => {
+      let pageRequests = Math.ceil(acctDataDBSafe.publicRepos / 100);
+      return Promise.all(repoAPIFetch(acctDataDBSafe.name, pageRequests))
+    })
+    .then(repoAPIResponse => {
+      let reposAPI = repoAPIResponse.reduce((arr, nextPage) => {
+        return arr.concat(nextPage.data)
+      }, [])
+      let reposDataDBSafe = []
+
+      reposAPI.forEach(repo => {
+        let newForm = formatRepoDataToDB(repo, accountName)
+        reposDataDBSafe.push(newForm)
       })
+      return reposDataDBSafe
     })
-    // .then(() => console.log('new account posted to DB'))
+    .then(reposDataDBSafe => {
+      console.log('reposDataDBSafe: ', reposDataDBSafe);
+      // reposDataDBSafe.forEach(repo => { //use to post to DB
+      //   axios.post(`/api/repo/${repo.ownerName}`, repo)
+      //   .then(() => console.log(`${repo.name} saved to DB`))
+      // })
+      return reposDataDBSafe
+    })
+    .then(formattedRepos => dispatch(fetchReposAPI(formattedRepos)))
+    .then(() => console.log('Account and repos fetched'))
     .catch(err => console.error(err))
   }
 
-
-export const fetchAcctFromDB = accountName =>
+export const getReposFromDB = accountName =>
   dispatch => {
     return axios.get(`/api/repo/${accountName}`)
-    .then(res => {
-      console.log('res: ', res);
-      dispatch(fetchDBRepo(res.data))
-    })
-    .catch(err => console.error(err))
-  }
-
-export const getRepoDetails = (accountName, numOfRepos) =>
-  dispatch => {
-    let pageRequests = Math.ceil(numOfRepos / 100);
-    Promise.all(promiseArr(accountName, pageRequests))
-    .then((allRepos) => {
-      if (!allRepos.length === 0){ return console.log('This account does not have any repos.')}
-      else {
-        let combinedRepos = allRepos.reduce((arr, nextPage) => {
-          return arr.concat(nextPage.data)
-        }, [])
-        console.log(`${accountName}'s Repos: `, combinedRepos);
-        dispatch(getRepoData(combinedRepos))
-        combinedRepos.forEach(repo => {
-          // let santizedLicense = !repo.license.name ? 'License not specified' : repo.license.name;
-          let repoData = {
-            name: repo.name.toLowerCase(),
-            description: repo.description,
-            repoStarted: repo.created_at,
-            htmlURL: repo.html_url,
-            size: repo.size,
-            watchers: repo.watchers_count,
-            forks: repo.forks_count,
-            owner: accountName.toLowerCase()
-            // license: santizedLicense,
-          }
-          axios.post(`/api/repo/${accountName.toLowerCase()}`, repoData)
-          .then(() => console.log(`${repo.name} saved to DB`))
-        })
-      }
-    })
+    .then(res => dispatch(getReposDB(res.data)))
     .catch(err => console.error(err))
   }
 
 export default function (state = initialState, action){
   switch (action.type){
-    case GET_ACCT_DATA:
-      return { acctDetails: action.acctDetails }
-    case GET_REPO_DATA:
-      // console.log('!!!check here for a sec', action.repoDetails)
-      return Object.assign( state, { repoDetails: action.repoDetails })
-    case FETCH_DB_REPO:
+    case FETCH_ACCT_API:
+      return { account: action.account }
+    case FETCH_REPOS_API:
       return Object.assign( state, { repos: action.repos })
+    // case GET_REPOS_DB:
+    //   return Object.assign( state, { dbRepos: action.dbRepos })
     default:
       return state;
   }

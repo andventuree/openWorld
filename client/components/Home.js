@@ -5,7 +5,7 @@ import { Container, Divider } from 'semantic-ui-react'
 
 class Home extends Component {
   render(){
-    const { acctDetails, repoDetails } = this.props
+    const { account, repos } = this.props
     return (
       <Container>
       <Divider hidden/>
@@ -13,8 +13,8 @@ class Home extends Component {
           <Banner />
         </Container>
         <SearchBar />
-        { acctDetails && <StatBar acctDetails={acctDetails} /> }
-        { acctDetails && <RepoDetails repoDetails={repoDetails} /> }
+        { account && <StatBar account={account} /> }
+        { account && <RepoDetails repos={repos} /> }
       </Container>
     )
   }
@@ -22,8 +22,8 @@ class Home extends Component {
 
 const mapState = (state) => {
   return {
-    acctDetails: state.SearchBar.acctDetails,
-    repoDetails: state.SearchBar.repoDetails
+    account: state.SearchBar.account,
+    repos: state.SearchBar.repos
   }
 }
 

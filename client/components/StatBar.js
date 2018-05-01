@@ -1,23 +1,23 @@
 import React from 'react'
 import { Container, Statistic, Image, Divider } from 'semantic-ui-react'
 
-function StatBar({acctDetails}){
-  let memberSignUpDate = acctDetails.created_at.slice(0, 4)
+function StatBar({account}){
+  let memberSignUpDate = account.membershipStart.slice(0, 4)
   return (
     <div>
       <Container>
-        <Image src={acctDetails.avatar_url} size='small' centered />
+        <Image src={account.avatarURL} size='small' centered />
       </Container>
       <Divider hidden />
       <Container>
         <Statistic.Group widths='three'>
             <Statistic>
-              <Statistic.Value>{acctDetails.public_repos}</Statistic.Value>
+              <Statistic.Value>{account.publicRepos}</Statistic.Value>
               <Statistic.Label>Public Repositories</Statistic.Label>
             </Statistic>
 
             <Statistic>
-              <Statistic.Value>{acctDetails.public_gists}</Statistic.Value>
+              <Statistic.Value>{account.publicGists}</Statistic.Value>
               <Statistic.Label>Public Gists</Statistic.Label>
             </Statistic>
 
