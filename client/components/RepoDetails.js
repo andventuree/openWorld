@@ -16,7 +16,7 @@ class RepoDetails extends Component {
     // const accountName = this.props.acctDetails.name
     // const numOfRepos = this.props.acctDetails.public_repos
     // this.props.loadRepoDetails(accountName, numOfRepos)
-    console.log('Loading the RepoDetails Component', this.props);
+    // console.log('Loading the RepoDetails Component', this.props);
   }
 
   handleClick(){
@@ -31,14 +31,7 @@ class RepoDetails extends Component {
       <div>
       <Container textAlign='center'>
         <Divider hidden/>
-        <Button onClick={this.handleClick}>click me for repos</Button>
-        <Divider hidden/>
       </Container>
-      { this.state.showRepos && this.props.repoDetails.map(repo => {
-        return (<Segment>{repo.name}</Segment>)
-      })
-      }
-
       <Container >
         <Segment>
         <Table celled padded>
@@ -117,5 +110,9 @@ export default connect(mapState, mapDispatch)(RepoDetails)
 // }
 // </Grid>
 
+// <Button onClick={this.handleClick}>click me for repos</Button>
 
-
+// { this.props.repoDetails ? this.props.repoDetails.map(repo => {
+//   return (<Segment>{repo.name}</Segment>)
+// }) : <div>Loading</div>
+// }

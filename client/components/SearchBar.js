@@ -28,7 +28,7 @@ class SearchBar extends Component{
       <form onSubmit={this.handleSubmit}>
         <Input
           fluid
-          icon="users"
+          icon="github"
           iconPosition="left"
           size="massive"
           name="accountName"

@@ -55,7 +55,7 @@ export const getAccountDetails = accountName =>
         }
       })
     })
-    .then(() => console.log('new account posted to DB'))
+    // .then(() => console.log('new account posted to DB'))
     .catch(err => console.error(err))
   }
 
@@ -108,6 +108,7 @@ export default function (state = initialState, action){
     case GET_ACCT_DATA:
       return { acctDetails: action.acctDetails }
     case GET_REPO_DATA:
+      // console.log('!!!check here for a sec', action.repoDetails)
       return Object.assign( state, { repoDetails: action.repoDetails })
     case FETCH_DB_REPO:
       return Object.assign( state, { repos: action.repos })

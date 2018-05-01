@@ -5,7 +5,7 @@ import { Container, Grid } from 'semantic-ui-react'
 
 class Home extends Component {
   render(){
-    console.log('this.props in Home component: ', this.props);
+    // console.log('this.props in Home component: ', this.props);
     const { acctDetails, repoDetails } = this.props
     return (
       <div>
