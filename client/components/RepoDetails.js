@@ -9,7 +9,10 @@ class RepoDetails extends Component {
         <Container textAlign='center'>
           <Divider hidden/>
         </Container>
-
+        { console.log(this.props.repos)}
+        { this.props.repos && this.props.repos.map(repo => {
+          return (<div>anything</div>)
+        })}
         <Container >
           <Segment>
           <Table celled padded>
@@ -45,4 +48,10 @@ class RepoDetails extends Component {
   }
 }
 
-export default connect()(RepoDetails)
+const mapState = state => {
+  return {
+    repos: state.SearchBar.repos
+  }
+}
+
+export default connect(mapState)(RepoDetails)

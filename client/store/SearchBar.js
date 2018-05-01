@@ -1,11 +1,12 @@
 import axios from 'axios'
+
 // Helper functions
 const repoAPIFetch = (accountName, fetches) => {
-  let moreRequests = [];
+  let repoRequestPages = [];
   for (let i = 1; i < fetches + 1; i++){
-    moreRequests.push(axios.get(`https://api.github.com/orgs/${accountName}/repos?per_page=100&page=${i}`))
+    repoRequestPages.push(axios.get(`https://api.github.com/orgs/${accountName}/repos?per_page=100&page=${i}`))
   }
-  return moreRequests;
+  return repoRequestPages;
 }
 
 const formatAcctDataToDB = (accountAPIDetails) => {
@@ -20,7 +21,6 @@ const formatAcctDataToDB = (accountAPIDetails) => {
 }
 
 const formatRepoDataToDB = (repoAPIDetails, ownerName) => {
-  // console.log('Repo API data is sanitized');
   return {
     name: repoAPIDetails.name,
     description: repoAPIDetails.description,
@@ -33,18 +33,22 @@ const formatRepoDataToDB = (repoAPIDetails, ownerName) => {
   }
 }
 
+// Redux items
 let initialState = {
-  // repoDetails: [],
-  repos: []
+  // account: {},
+  // repos: [],
+  // show: false
 }
 
 const FETCH_ACCT_API = 'FETCH_ACCT_API'
 const FETCH_REPOS_API = 'FETCH_REPOS_API'
 const GET_REPOS_DB = 'GET_REPOS_DB'
+const SHOW_COMPONENTS = 'SHOW_COMPONENTS'
 
 export const fetchAcctAPI = (account) => ({type: FETCH_ACCT_API, account})
 export const fetchReposAPI = (repos) => ({type: FETCH_REPOS_API, repos})
 export const getReposDB = (repos) => ({type: GET_REPOS_DB, repos})
+export const showComponents = () => ({type: SHOW_COMPONENTS, show: true})
 
 export const getAcctAndRepoDetailsFromAPI = accountName =>
   dispatch => {
@@ -72,7 +76,6 @@ export const getAcctAndRepoDetailsFromAPI = accountName =>
       return reposDataDBSafe
     })
     .then(reposDataDBSafe => {
-      console.log('reposDataDBSafe: ', reposDataDBSafe);
       // reposDataDBSafe.forEach(repo => { //use to post to DB
       //   axios.post(`/api/repo/${repo.ownerName}`, repo)
       //   .then(() => console.log(`${repo.name} saved to DB`))
@@ -84,21 +87,24 @@ export const getAcctAndRepoDetailsFromAPI = accountName =>
     .catch(err => console.error(err))
   }
 
-export const getReposFromDB = accountName =>
-  dispatch => {
-    return axios.get(`/api/repo/${accountName}`)
-    .then(res => dispatch(getReposDB(res.data)))
-    .catch(err => console.error(err))
-  }
+// export const getReposFromDB = accountName =>
+//   dispatch => {
+//     return axios.get(`/api/repo/${accountName}`)
+//     .then(res => dispatch(getReposDB(res.data)))
+//     .catch(err => console.error(err))
+//   }
 
 export default function (state = initialState, action){
   switch (action.type){
     case FETCH_ACCT_API:
-      return { account: action.account }
+    return { account: action.account }
+      // return Object.assign( state, { account: action.account })
     case FETCH_REPOS_API:
       return Object.assign( state, { repos: action.repos })
     // case GET_REPOS_DB:
     //   return Object.assign( state, { dbRepos: action.dbRepos })
+    case SHOW_COMPONENTS:
+      return Object.assign( state, { show: action.show })
     default:
       return state;
   }
