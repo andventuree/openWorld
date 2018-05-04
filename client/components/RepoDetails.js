@@ -9,10 +9,7 @@ class RepoDetails extends Component {
         <Container textAlign='center'>
           <Divider hidden/>
         </Container>
-        { console.log(this.props.repos)}
-        { this.props.repos && this.props.repos.map(repo => {
-          return (<div>anything</div>)
-        })}
+
         <Container >
           <Segment>
           <Table celled padded>
@@ -27,17 +24,21 @@ class RepoDetails extends Component {
             </Table.Header>
 
             <Table.Body>
-              <Table.Row>
-                <Table.Cell>
-                  <Header as='h3' textAlign='left'>swift-protobuf</Header>
-                </Table.Cell>
-                <Table.Cell singleLine>2016</Table.Cell>
-                <Table.Cell>1800</Table.Cell>
-                <Table.Cell>152</Table.Cell>
-                <Table.Cell>
-                  "Plugin and runtime library for using protobuf with Swift"
-                </Table.Cell>
-              </Table.Row>
+            { this.props.repos && this.props.repos.map(repo => {
+              return (
+                <Table.Row key={repo.id}>
+                  <Table.Cell>
+                    <Header as='h5' textAlign='left'>{repo.name}</Header>
+                  </Table.Cell>
+                  <Table.Cell singleLine>{repo.repoStarted.slice(0,4)}</Table.Cell>
+                  <Table.Cell>{repo.watchers}</Table.Cell>
+                  <Table.Cell>{repo.forks}</Table.Cell>
+                  <Table.Cell>
+                    {repo.description}
+                  </Table.Cell>
+                </Table.Row>
+              )
+            })}
             </Table.Body>
             </Table>
 

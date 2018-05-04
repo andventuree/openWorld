@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { loadSuccess, loadFailure } from '../store'
 
 // Helper functions
 const repoAPIFetch = (accountName, fetches) => {
@@ -35,8 +36,8 @@ const formatRepoDataToDB = (repoAPIDetails, ownerName) => {
 
 // Redux items
 let initialState = {
-  // account: {},
-  // repos: [],
+  account: {},
+  repos: [],
 }
 
 const FETCH_ACCT_API = 'FETCH_ACCT_API'
@@ -51,7 +52,7 @@ export const getAcctAndRepoDetailsFromAPI = accountName =>
     .then(acctAPIResponse => {
       let acctDataDBSafe = formatAcctDataToDB(acctAPIResponse.data) //for when we save to DB
       dispatch(fetchAcctAPI(acctDataDBSafe))
-        return acctDataDBSafe;
+      return acctDataDBSafe;
         // return axios.post(`/api/githubAcct/${acctAPIResponse.data.name.toLowerCase()}`, githubAcctData) //use to post to DB
     })
     .then(acctDataDBSafe => {
@@ -71,21 +72,25 @@ export const getAcctAndRepoDetailsFromAPI = accountName =>
       return reposDataDBSafe
     })
     .then(reposDataDBSafe => {
-      // reposDataDBSafe.forEach(repo => { //use to post to DB
-      //   axios.post(`/api/repo/${repo.ownerName}`, repo)
-      //   .then(() => console.log(`${repo.name} saved to DB`))
-      // })
-      return reposDataDBSafe
+        // reposDataDBSafe.forEach(repo => { //use to post to DB
+        //   axios.post(`/api/repo/${repo.ownerName}`, repo)
+        //   .then(() => console.log(`${repo.name} saved to DB`))
+        // })
+        return reposDataDBSafe
     })
     .then(formattedRepos => dispatch(fetchReposAPI(formattedRepos)))
     .then(() => console.log('Account and repos fetched'))
-    .catch(err => console.error(err))
+    .then(() => dispatch(loadSuccess()))
+    .catch(err => {
+      dispatch(loadFailure())
+      console.error(err)
+    })
   }
 
 export default function (state = initialState, action){
   switch (action.type){
     case FETCH_ACCT_API:
-    return { account: action.account }
+      return { account: action.account }
     case FETCH_REPOS_API:
       return Object.assign( state, { repos: action.repos })
     default:
