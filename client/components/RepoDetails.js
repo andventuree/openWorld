@@ -49,6 +49,7 @@ class RepoDetails extends Component {
 }
 
 const mapState = state => {
+  console.log('state.SearchBar.repos: ', state.SearchBar.repos);
   return {
     repos: state.SearchBar.repos
   }

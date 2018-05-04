@@ -37,18 +37,13 @@ const formatRepoDataToDB = (repoAPIDetails, ownerName) => {
 let initialState = {
   // account: {},
   // repos: [],
-  // show: false
 }
 
 const FETCH_ACCT_API = 'FETCH_ACCT_API'
 const FETCH_REPOS_API = 'FETCH_REPOS_API'
-const GET_REPOS_DB = 'GET_REPOS_DB'
-const SHOW_COMPONENTS = 'SHOW_COMPONENTS'
 
 export const fetchAcctAPI = (account) => ({type: FETCH_ACCT_API, account})
 export const fetchReposAPI = (repos) => ({type: FETCH_REPOS_API, repos})
-export const getReposDB = (repos) => ({type: GET_REPOS_DB, repos})
-export const showComponents = () => ({type: SHOW_COMPONENTS, show: true})
 
 export const getAcctAndRepoDetailsFromAPI = accountName =>
   dispatch => {
@@ -87,24 +82,12 @@ export const getAcctAndRepoDetailsFromAPI = accountName =>
     .catch(err => console.error(err))
   }
 
-// export const getReposFromDB = accountName =>
-//   dispatch => {
-//     return axios.get(`/api/repo/${accountName}`)
-//     .then(res => dispatch(getReposDB(res.data)))
-//     .catch(err => console.error(err))
-//   }
-
 export default function (state = initialState, action){
   switch (action.type){
     case FETCH_ACCT_API:
     return { account: action.account }
-      // return Object.assign( state, { account: action.account })
     case FETCH_REPOS_API:
       return Object.assign( state, { repos: action.repos })
-    // case GET_REPOS_DB:
-    //   return Object.assign( state, { dbRepos: action.dbRepos })
-    case SHOW_COMPONENTS:
-      return Object.assign( state, { show: action.show })
     default:
       return state;
   }

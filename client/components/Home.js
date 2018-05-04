@@ -2,46 +2,31 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Banner, SearchBar, StatBar, RepoDetails } from '../components'
 import { Container, Divider } from 'semantic-ui-react'
-import { showComponents } from '../store'
 
 class Home extends Component {
   render(){
-    const { account, repos, show } = this.props
+    console.log('this.props: ', this.props);
+    const { account, repos } = this.props
     return (
       <Container>
-      <Divider hidden/>
+        <Divider hidden/>
         <Container textAlign='center'>
           <Banner />
         </Container>
         <SearchBar />
-        { show && <StatBar account={account} /> }
-        { show && <RepoDetails repos={repos} /> }
+        { account && <StatBar account={account} /> }
+        { account && <RepoDetails repos={repos} /> }
       </Container>
     )
   }
 }
 
 const mapState = state => {
-  console.log('state: ', state);
-  if (Object.keys(state.SearchBar).length > 0) {
-    // this.props.doneLoading()
-    return {
-      account: state.SearchBar.account,
-      repos: state.SearchBar.repos,
-      show: state.SearchBar.show
-    }
-  } else {
-    return {}
-  }
-}
-
-const mapDispatch = dispatch => {
   return {
-    doneLoading: function(){
-      dispatch(showComponents())
-    }
+    account: state.SearchBar.account,
+    repos: state.SearchBar.repos,
   }
 }
 
-export default connect(mapState, mapDispatch)(Home)
+export default connect(mapState)(Home)
 
