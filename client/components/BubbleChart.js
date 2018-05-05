@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as d3 from 'd3'
+import { Container, Segment } from 'semantic-ui-react'
 
 class BubbleChart extends Component{
   componentDidMount(){
     // d3.select("#bubble-chart-container")
 
     var svgContainer = d3.select("#bubble-chart-container").append("svg")
-    .attr("width", 600)
-    .attr("height", 800)
+    .attr("width", 100)
+    .attr("height", 100)
     .style("border", "1px solid black");
 
     var circles = svgContainer.selectAll("circle")
@@ -25,7 +26,11 @@ class BubbleChart extends Component{
 
   render(){
     return (
-      <div id='bubble-chart-container'></div>
+      <Container>
+        <Segment>
+          <div id='bubble-chart-container'></div>
+        </Segment>
+      </Container>
     )
   }
 }

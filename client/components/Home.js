@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Banner, SearchBar, StatBar, RepoDetails, BubbleChart } from '../components'
+import { Banner, SearchBar, StatBar, RepoDetails, BubbleChart, BubbleChart2 } from '../components'
 import { Container, Divider } from 'semantic-ui-react'
 
 class Home extends Component {
@@ -14,7 +14,8 @@ class Home extends Component {
         </Container>
         <SearchBar />
         { loaded && <StatBar account={account} /> }
-        { loaded && <BubbleChart repos={repos}/>}
+
+        { loaded && <BubbleChart2 repos={repos}/>}
       </Container>
     )
   }
@@ -30,4 +31,5 @@ const mapState = state => {
 
 export default connect(mapState)(Home)
 
+// { loaded && <BubbleChart repos={repos}/>}
 // { loaded && <RepoDetails repos={repos} /> }
