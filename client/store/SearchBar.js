@@ -24,8 +24,8 @@ const formatAcctDataToDB = (accountAPIDetails) => {
 const formatRepoDataToDB = (repoAPIDetails, ownerName) => {
   return {
     name: repoAPIDetails.name,
-    description: repoAPIDetails.description,
-    repoStarted: repoAPIDetails.created_at,
+    description: repoAPIDetails.description || 'No description',
+    repoStarted: repoAPIDetails.created_at.slice(0, 4),
     htmlURL: repoAPIDetails.html_url,
     size: repoAPIDetails.size,
     watchers: repoAPIDetails.watchers_count,

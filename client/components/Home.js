@@ -5,7 +5,6 @@ import { Container, Divider } from 'semantic-ui-react'
 
 class Home extends Component {
   render(){
-    console.log('this.props: ', this.props);
     const { account, repos, loaded } = this.props
     return (
       <Container>

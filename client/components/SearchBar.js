@@ -14,7 +14,7 @@ class SearchBar extends Component {
   }
 
   handleChange(e){
-    let santizedSearch = e.target.value.toLowerCase();
+    let santizedSearch = e.target.value.toLowerCase().split(' ').join(' ');
     this.setState({[e.target.name]: santizedSearch})
   }
 
