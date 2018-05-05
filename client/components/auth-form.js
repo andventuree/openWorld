@@ -28,7 +28,7 @@ const AuthForm = (props) => {
         <Form size="large" onSubmit={handleSubmit} name={name}>
           <Container>
             <Button href="/auth/github" >
-            <Image src='http://chittagongit.com//images/github-icon-svg/github-icon-svg-14.jpg' size='medium' centered circular />
+            <Image src='/github-icon-svg-14.jpg' size='medium' centered circular />
             </Button>
           </Container>
         </Form>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Container, Segment, Table, Header, Divider, Loader, Dimmer } from 'semantic-ui-react'
+import { Container, Segment, Table, Divider, Loader, Dimmer } from 'semantic-ui-react'
 
 class RepoDetails extends Component {
   render(){
