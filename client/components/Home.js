@@ -15,6 +15,10 @@ class Home extends Component {
         <SearchBar />
         { loaded && <StatBar account={account} /> }
         { loaded && <RepoDetails repos={repos} /> }
+        { !loaded &&
+          <Container textAlign='center'>
+            Type in a company name (organization) in the search bar and see what you get!
+          </Container>}
       </Container>
     )
   }
