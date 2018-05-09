@@ -57,7 +57,7 @@ export const getAcctAndRepoDetailsFromAPI = accountName =>
     })
     .then(acctDataDBSafe => {
       let pageRequests = Math.ceil(acctDataDBSafe.publicRepos / 100);
-      return Promise.all(repoAPIFetch(acctDataDBSafe.name, pageRequests))
+      return Promise.all(repoAPIFetch(accountName, pageRequests))
     })
     .then(repoAPIResponse => {
       let reposAPI = repoAPIResponse.reduce((arr, nextPage) => {

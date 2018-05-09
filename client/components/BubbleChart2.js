@@ -14,23 +14,21 @@ class BubbleChart extends Component{
   }
 
   componentDidMount(){ //create initial bubbles when you component is loaded
+    const displayContainer = {width: 1100, height: 800 }
     D3Bubble.create(
       this._rootNode, //element d3 will initially select to
-      // {width: '100%', height: '100%' }, //dimensions of svg size
-      {width: 800, height: 800 },
+      displayContainer, //maybe can have pre-defined height but have variable width
       this.getChartState() //sending in data
     );
   }
 
-  // componentDidUpdate(){
-  //   D3Bubble.update(this._rootNode, this.getChartState())
-  // }
+  componentDidUpdate(){
+    D3Bubble.update(this._rootNode, this.getChartState())
+  }
 
   getChartState(){
     return {
       data: this.props.repos, //data from fetched repos
-      domain: {x: [0, 30], y: [0, 100]} //initial scale, will be put into .scaleLinear or scale.pow to scale bubbles to relative size
-      //since we dont have a domain obj, we'll have to adjust for it
     }
   }
 

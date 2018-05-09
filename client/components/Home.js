@@ -14,8 +14,8 @@ class Home extends Component {
         </Container>
         <SearchBar />
         { loaded && <StatBar account={account} /> }
-
         { loaded && <BubbleChart2 repos={repos}/>}
+        { loaded && <RepoDetails repos={repos} /> }
       </Container>
     )
   }
@@ -32,4 +32,4 @@ const mapState = state => {
 export default connect(mapState)(Home)
 
 // { loaded && <BubbleChart repos={repos}/>}
-// { loaded && <RepoDetails repos={repos} /> }
+
