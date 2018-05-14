@@ -18,7 +18,9 @@ class Home extends Component {
         { !loaded &&
           <Container textAlign='center'>
             Type in a company name (organization) in the search bar and see what you get!
-          </Container>}
+            e.g., Apple, Facebook or Google
+          </Container>
+        }
       </Container>
     )
   }

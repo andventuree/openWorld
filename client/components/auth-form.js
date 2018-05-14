@@ -26,10 +26,16 @@ const AuthForm = (props) => {
       >
         <Grid.Column style={{ maxWidth: 450 }}>
         <Form size="large" onSubmit={handleSubmit} name={name}>
+          <Container textAlign='center'>
+            This web application uses Github's API. If you do not log in, you may reach Github's maximum api call limit fairly quickly. To log in, simply click the button below.
+          </Container>
           <Container>
-            <Button href="/auth/github" >
-            <Image src='http://chittagongit.com//images/github-icon-svg/github-icon-svg-14.jpg' size='medium' centered circular />
-            </Button>
+            <a href='/auth/github' >
+              <Image src='github-icon-svg-14.png' size='medium' centered circular />
+            </a>
+          </Container>
+          <Container textAlign='center'>
+            To see this web application in action without logging in, simply navigate to http://open-world-1802.herokuapp.com/home.
           </Container>
         </Form>
         {error && error.response && <Message> {error.response.data} </Message>}
@@ -80,5 +86,3 @@ AuthForm.propTypes = {
   error: PropTypes.object
 }
 
-
-// <Icon name='github' /> {displayName} with GitHub
