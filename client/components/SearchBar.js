@@ -14,13 +14,13 @@ class SearchBar extends Component {
   }
 
   handleChange(e){
-    let santizedSearch = e.target.value.toLowerCase().split(' ').join(' ');
+    let santizedSearch = e.target.value.toLowerCase();
     this.setState({[e.target.name]: santizedSearch})
   }
 
   handleSubmit(e){
     e.preventDefault();
-    this.props.getDetailsFrom(this.state.accountName)
+    this.props.getDetailsFrom(this.state.accountName.split(' ').join(''))
   }
 
   render(){
