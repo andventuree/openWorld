@@ -35,7 +35,7 @@ const AuthForm = (props) => {
             </a>
           </Container>
           <Container textAlign='center'>
-            To see this web application in action without logging in, simply navigate to http://open-world-1802.herokuapp.com/home.
+            To see this web application in action without logging in, simply navigate to http://open-world-repos.herokuapp.com/home.
           </Container>
         </Form>
         {error && error.response && <Message> {error.response.data} </Message>}
