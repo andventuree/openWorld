@@ -1,6 +1,9 @@
-# _Open World_ - A search engine for registered Github Organizations.
+# _Open World_ - A search engine for registered Github organizations
+
+![Home page](assets/OpenWorldGreeting.png)
 
 [Deployed Website on Heroku](https://open-world-repos.herokuapp.com)
+
 [Hackathon Presentation - Youtube](https://youtu.be/RZdFeJjzzZQ)
 
 ## Background
@@ -12,10 +15,8 @@
 * Front-end: React, Redux, Semantic UI
 * Back-end: Node.js, Express, Passport, PostgreSQL
 
-## Screenshots
-![Home page](assets/OpenWorldGreeting.png)
+## Screenshot
 ![Search results](assets/OpenWorldTable.png)
-
 
 ## Running App Locally
 
@@ -28,5 +29,6 @@ To run this application locally, `git clone` this to your file system directory.
 
 ## Work in Progress
 ![Search results](assets/OpenWorldDataVisual.png)
-While I have successfully rendered D3 bubble visuals to the DOM, I have not added a tooltip yet to indicate the repository each bubble represents. More to come!
+
+While I have successfully rendered D3 bubble visuals to the DOM, I have not added a tooltip to indicate the repository each bubble represents. More to come!
 
